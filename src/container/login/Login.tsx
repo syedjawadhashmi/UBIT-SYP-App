@@ -1,9 +1,12 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { browserHistory } from 'react-router';
-import FlatButton from 'material-ui/FlatButton'
-import LoginComponent from '../../component/login/Login';
-import AuthActions from "./../../store/action/auth";
+import RaisedButton from 'material-ui/RaisedButton'
+import TextField from 'material-ui/TextField'
+import style from './signinform.scss';
+const buttonStyle = { width: '100%' }
+const fieldStyle = { width: '80%' }
+
 
 interface IRMemberProps extends React.Props<any> {
     login: (obj: Object) => void;
@@ -45,28 +48,36 @@ class Login extends React.Component<IRMemberProps, any> {
     }
 
     render() {
-        return (
-            <div className="container">
-                <div className="row col-md-5 offset-md-3">
-                    <LoginComponent click={this.onLoginClick} />
-                    <br />
-                    <div>
-                        <label>
-                            Admin: admin@admin.com -- Pwd: !admin@123
-                            <FlatButton
-                                label='Missing Reports'
-                            />
-                    </label>
-                        <label>
-                            Student: student@level0.com -- Pwd: 123456
-                    </label>
-                        <label>
-                            Admin: company1@level0.com -- Pwd: 123456
-                    </label>
-                    </div>
-                </div>
+        <form style={{padding: '16px',margin:'0px'}} className='LoginForm' onSubmit={handleSubmit}>
+            <TextField
+                floatingLabelText='Email'
+                name="email"
+                onChange={({ target }) => { this.setState({email: target.value}) }}
+                errorText={errors.email}
+                style={fieldStyle}
+            />
+
+
+            <TextField
+                floatingLabelText='Password'
+                name='password'
+                type='password'
+                errorText={errors.password}
+                onChange={({ target }) => { this.setState({password: target.value}) }}
+                style={fieldStyle}
+            />
+
+
+            <div className='LoginForm-Submit'>
+                <RaisedButton
+                    label='Login'
+                    primary
+                    type='submit'
+                    style={buttonStyle}
+                />
+
             </div>
-        );
+        </form>
     }
 
 }

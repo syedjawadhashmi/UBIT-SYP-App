@@ -1,69 +1,53 @@
+
 import * as React from "react";
 import { connect } from "react-redux";
-import { browserHistory } from 'react-router';
+import {browserHistory} from 'react-router';
+//import { authActions } from '../../action/auth';
 
-import SignupComponent from "./../../component/signup/Signup";
-import AuthActions from "./../../store/action/auth";
+// Components
+import SignupComponent from '../../component/signup/Signup';
+import Paper from 'material-ui/Paper'
+import CircularProgress from 'material-ui/CircularProgress'
+import Snackbar from 'material-ui/Snackbar'
+import RaisedButton from 'material-ui/RaisedButton'
+
 
 interface IRMemberProps extends React.Props<any> {
-    signup: (obj: Object) => void;
-    isRegistered: boolean;
-    activeUser: any;
-    counterReg: any
+    handleSignup: (obj: Object) => void;
+
 }
 
-function mapStateToProps(state: any) {
-    return {
-        isRegistered: state.AuthReducer['isRegistered'],
-        activeUser: state.AuthReducer['activeUser'],
-        counterReg: state.AuthReducer['counterReg']
-    };
-}
 
-function mapDispatchToProps(dispatch: any) {
-    return {
-        signup: (data: Object): void => dispatch(AuthActions.signup(data))
-    };
-}
-class Signup extends React.Component<IRMemberProps, any> {
+
+
+class Signup extends React.Component<any, any> {
 
     constructor() {
         super();
-        this.onSignupClick = this.onSignupClick.bind(this);
+        this.handleSignup = this.handleSignup.bind(this);
     }
 
-    onSignupClick(state: any) {
-        this.props.signup(state);
-    }
-
-    _flag = true;
-    componentWillReceiveProps() {
-        setTimeout(() => {
-        console.log('propsssssss................ ', this.props)
-            if (this.props.counterReg > 0 && this.props.activeUser.type == 'admin') {
-                browserHistory.push('/home');
-            } 
-            if (this.props.isRegistered && this._flag && this.props.activeUser.type != 'admin') {
-                this._flag = false;
-                browserHistory.push('/login');
-            } else if (!this.props.isRegistered && !this._flag) {
-                this._flag = true;
-            }
-        }, 5);
+    handleSignup(state: any) {
+        // this.props.registerWithCustom({ email, password, firstName ,lastName})
+        browserHistory.push('/signin')
     }
 
 
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6 offset-md-2">
-                        <SignupComponent click={this.onSignupClick} authenticUser={this.props.activeUser} />
-                    </div>
-                </div>
+            <div className='Login' style={{marginLeft: '340px',marginTop: '67px',width: '50%'}}>
+                <Paper className='Login-Panel'>
+                    <SignupComponent click ={this.handleSignup} />
+                </Paper>
             </div>
-        );
+        )
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+
+function mapDispatchToProps(dispatch: any) {
+    return {
+        handleSignup: (data: Object): void => dispatch()
+    };
+}
+export default connect(null, mapDispatchToProps)(Signup);

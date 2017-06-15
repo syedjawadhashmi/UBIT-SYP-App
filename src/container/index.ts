@@ -3,6 +3,8 @@ import Login from './login/Login';
 import AdminPanel from './adminPanel/AdminPanel';
 import Signup from "./signup/Signup";
 import App from "./app/App";
+import Navbar from "./Navbar/Navbar";
+
 import AdminDashboard from "./../container/adminDashboard/adminDashboard";
 export const components: any[] = [
     App,
@@ -10,7 +12,8 @@ export const components: any[] = [
     Login,
     AdminPanel,
     Signup,
-    AdminDashboard
+    AdminDashboard,
+    Navbar
 ]
 
 export {
@@ -19,5 +22,6 @@ export {
     Login,
     AdminPanel,
     Signup,
-    AdminDashboard
+    AdminDashboard,
+    Navbar
 }

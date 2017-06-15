@@ -11,7 +11,8 @@ import * as injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import { store } from './store/index';
 // import * as firebase from "firebase";
-import { App, Home, Login, AdminPanel, Signup, AdminDashboard } from "./container";
+import { App, Login, AdminPanel, Signup, AdminDashboard } from "./container";
+import { Home } from "./component";
 
 
 
@@ -38,9 +39,10 @@ ReactDOM.render(
     <MuiThemeProvider>
     <Provider store={store}>
 
+
         <Router history={browserHistory}>
             <Route path="/" component={App}>
-                <IndexRoute component={Login} />
+                <IndexRoute component={Home} />
                 <Route path="login" component={Login} />
                 <Route path="signup" component={Signup} />
                 <Route component={AdminDashboard} onEnter={checkIsAdmin}>

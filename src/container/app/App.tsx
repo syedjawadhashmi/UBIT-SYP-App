@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Link } from 'react-router'
 import {browserHistory} from 'react-router';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import Navbar from "./../../container/Navbar/Navbar";
 // redux/firebase
 import { connect } from 'react-redux'
 import AuthActions from "./../../store/action/auth";
@@ -61,17 +63,21 @@ class App extends React.Component<any, any> {
     }
 
     render() {
+
         return (
             <div>
 
-                <AppBar title="Panacloud Parking System" className='Navbar'  />
+                <Navbar/>
 
+                {this.props.children}
             </div>
+
+
+
+
 
         )
 
     }
 }
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(App)

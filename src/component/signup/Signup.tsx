@@ -1,5 +1,14 @@
 import * as React from "react";
 import { Link } from "react-router";
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+
+
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+const fieldStyle = { width: '80%',marginLeft: '60px'
+}
+const buttonStyle = { width: '100%',    marginTop: '30px' }
 
 class SignupComponent extends React.Component<any, any>{
 
@@ -53,50 +62,49 @@ class SignupComponent extends React.Component<any, any>{
 
     render() {
         return (
-            <form noValidate onSubmit={this._onSubmit}>
-                <h1>Signup!</h1>
-                <hr />
-                {
-                    this.props.authenticUser.type == "admin" &&
-                    <div className="form-group">
-                        <label htmlFor="cuid">Type:</label>
-                        <select name="type" id="type" className="form-control" onChange={this.handlerInput}>
-                            <option value="student">Student</option>
-                            <option value="company">Company</option>
-                        </select>
-                    </div>
-                }
-                <div className="form-group">
-                    <label htmlFor="cuid">Username:</label>
-                    <input type="text" className="form-control" id="cuid" name="cuid" onChange={this.handlerInput} autoComplete="off" required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="fname">firstName:</label>
-                    <input type="text" className="form-control" id="fname" name="fname" onChange={this.handlerInput} autoComplete="off" required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="lname">lastName:</label>
-                    <input type="text" className="form-control" id="lname" name="lname" onChange={this.handlerInput} autoComplete="off" required />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="contact">Contact:</label>
-                    <input type="text" className="form-control" id="contact" name="contact" onChange={this.handlerInput} autoComplete="off" required />
-                </div>
-                {/*<div className="form-group">
-                    <label htmlFor="address">Address:</label>
-                    <input type="text" className="form-control" id="address" name="address" onChange={this.handlerInput} autoComplete="off" />
-                </div>*/}
-                <div className="form-group">
-                    <label htmlFor="eml">Email address:</label>
-                    <input type="email" className="form-control" id="eml" name="eml" onChange={this.handlerInput} autoComplete="off" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="pwd">Password:</label>
-                    <input type="password" className="form-control" id="pwd" name="pwd" onChange={this.handlerInput} autoComplete="off" />
-                </div>
-                <div>
-                    <input type="submit" value="Signup" className="btn btn-default" name="register" />
-                    <span className="pull-right"><Link className="nav-link" to="/login">Login?</Link></span>
+            <form style={{padding: '16px',margin:'0px'}} className='LoginForm'  onSubmit={this._onSubmit}>
+
+                <TextField
+                    hintText='First Name'
+                    floatingLabelText='First Name'
+                    onChange={this.handlerInput}
+                    style={fieldStyle}/>
+                <TextField
+                    hintText='Last Name'
+                    floatingLabelText='Last Name'
+                    onChange={this.handlerInput}
+                    style={fieldStyle}/>
+
+                <TextField
+                    hintText='Email'
+                    floatingLabelText='Email'
+                    onChange={this.handlerInput}
+                    style={fieldStyle}
+                />
+                <TextField
+                    hintText='password'
+                    floatingLabelText='Password'
+                    onChange={this.handlerInput}
+                    style={fieldStyle}
+                    type='password'
+                />
+                {/*    <SelectField
+                 value={this.state.value}
+                 onChange={this.handleChange}
+                 floatingLabelText="Floating Label Text"
+                 floatingLabelFixed={true}
+                 hintText="Hint text"
+                 >
+                 {items}
+                 </SelectField>*/}
+
+                <div className='LoginForm-Submit'>
+                    <RaisedButton
+                        label='Sign Up'
+                        primary
+                        type='submit'
+                        style={buttonStyle}
+                    />
                 </div>
             </form>
         )
