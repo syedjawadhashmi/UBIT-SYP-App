@@ -12,7 +12,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
-const buttonStyle = { color: 'white' }
+const buttonStyle = { color: 'white' ,    textDecoration: 'none'}
 const stockPhotoUrl = 'https://s3.amazonaws.com/kyper-cdn/img/User.png'
 const originSettings = { horizontal: 'right', vertical: 'bottom' }
 const avatarSize = 50;
@@ -103,7 +103,7 @@ class Navbar extends React.Component<any, any> {
         return(
             <div>
 
-                <AppBar title="Raccon Police Department" className='Navbar' showMenuIconButton={false} iconElementRight={rightMenu} />
+                <AppBar title={<Link to='/' style={buttonStyle}>Crime Reports </Link> }className='Navbar' showMenuIconButton={false} iconElementRight={rightMenu} />
 
             </div>
         )

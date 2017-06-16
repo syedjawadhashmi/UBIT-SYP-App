@@ -6,9 +6,21 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-const fieldStyle = { width: '80%',marginLeft: '60px'
+
+const buttonStyle = {    width: '30%',
+    minWidth: '192px',
+    marginTop: '1.5rem',
+    textAlign: 'center',
+    color: 'blue' }
+const LoginFormStyle = {
+    display: 'flex',
+    msFlexDirection: 'column',
+    flexDirection: 'column',
+    msFlexAlign: 'center',
+    alignItems: 'center',
+    padding: '16px',margin:'0px'
 }
-const buttonStyle = { width: '100%',    marginTop: '30px' }
+const fieldStyle = { width: '80%' }
 
 class SignupComponent extends React.Component<any, any>{
 
@@ -62,7 +74,7 @@ class SignupComponent extends React.Component<any, any>{
 
     render() {
         return (
-            <form style={{padding: '16px',margin:'0px'}} className='LoginForm'  onSubmit={this._onSubmit}>
+            <form style={LoginFormStyle} className='LoginForm'  onSubmit={this._onSubmit}>
 
                 <TextField
                     hintText='First Name'
