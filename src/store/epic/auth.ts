@@ -55,19 +55,19 @@ export default class AuthEpic {
                             displayName: payload.cuid,
                             photoURL: 'some/url'
                         });
-
+                           console.log("obj" +obj)
                         let uObj = {
                             fuid: obj.uid,
                             cuid: payload.cuid,
                             eml: payload.eml,
                             pwd: payload.pwd,
-                            type: payload.type,
                             fname: payload.fname,
                             lname: payload.lname
                         };
                         firebase.database().ref('/').child(`users/${payload.cuid}`).set(uObj);
                         firebase.database().ref('/').child(`auth/${obj.uid}`).set(uObj);
-                        console.log('ok created user wow!')
+                        console.log("obj" +obj)
+                        console.log('ok created user wow!'+obj)
                         return {
                             type: AuthActions.SIGNUP_SUCCESS,
                             payload: uObj

@@ -30,10 +30,7 @@ class SignupComponent extends React.Component<any, any>{
             cuid: "",
             fname: "",
             lname: "",
-            type: "student",
             eml: "",
-            contact: "",
-            // address: "",
             pwd: ""
         };
 
@@ -62,8 +59,6 @@ class SignupComponent extends React.Component<any, any>{
             alert('Pls Last Name')
         } else if (this.state.eml.length <= 5) {
             alert('Pls Email Id')
-        } else if (this.state.contact.length <= 7) {
-            alert('Pls Contact, mix length 7')
         } else if (this.state.pwd.length <= 5) {
             alert('Pls Pwd, max length should be 5')
         } else {
@@ -77,24 +72,35 @@ class SignupComponent extends React.Component<any, any>{
             <form style={LoginFormStyle} className='LoginForm'  onSubmit={this._onSubmit}>
 
                 <TextField
+                    hintText='Username'
+                    name="cuid"
+                    floatingLabelText='Username'
+                    onChange={this.handlerInput}
+                    style={fieldStyle}/>
+
+                <TextField
                     hintText='First Name'
+                    name="fname"
                     floatingLabelText='First Name'
                     onChange={this.handlerInput}
                     style={fieldStyle}/>
                 <TextField
                     hintText='Last Name'
+                    name="lname"
                     floatingLabelText='Last Name'
                     onChange={this.handlerInput}
                     style={fieldStyle}/>
 
                 <TextField
                     hintText='Email'
+                    name="eml"
                     floatingLabelText='Email'
                     onChange={this.handlerInput}
                     style={fieldStyle}
                 />
                 <TextField
                     hintText='password'
+                    name="pwd"
                     floatingLabelText='Password'
                     onChange={this.handlerInput}
                     style={fieldStyle}
