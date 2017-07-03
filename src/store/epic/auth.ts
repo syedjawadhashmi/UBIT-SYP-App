@@ -60,6 +60,7 @@ export default class AuthEpic {
                             fuid: obj.uid,
                             cuid: payload.cuid,
                             eml: payload.eml,
+                            type: "reporter",
                             pwd: payload.pwd,
                             fname: payload.fname,
                             lname: payload.lname

@@ -13,10 +13,12 @@ import IAppState from './IAppState';
 // reducers
 import AuthReducer from "./reducer/auth";
 import StudentReducer from "./reducer/student";
+import ReportsReducer from "./reducer/reports";
 
 // epics
 import AuthEpic from "./epic/auth";
 import StudentEpic from "./epic/student";
+import ReportsEpic from "./epic/reports";
 
 
 // Application Epics / Effects
@@ -34,14 +36,17 @@ export const rootEpic = combineEpics(
     StudentEpic.updateVacancyEpics,
     StudentEpic.deleteVacancyEpics,
     StudentEpic.onVacancyEventDeleteEpics,
-    StudentEpic.getAllStudents,
+    ReportsEpic.getAllReports,
+    ReportsEpic.getComplaints,
+    ReportsEpic.getCrimes,
 
 );
 
 // Application Reducers
 export const rootReducer = combineReducers<IAppState>({
     AuthReducer,
-    StudentReducer
+    StudentReducer,
+    ReportsReducer
 });
 
 
