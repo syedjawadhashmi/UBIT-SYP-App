@@ -4,6 +4,9 @@ import AdminPanel from './adminPanel/AdminPanel';
 import Signup from "./signup/Signup";
 import App from "./app/App";
 import Navbar from "./Navbar/Navbar";
+import User from "./user/user";
+import Userhome from "./userhome/userhome";
+
 
 import AdminDashboard from "./../container/adminDashboard/adminDashboard";
 export const components: any[] = [
@@ -13,7 +16,9 @@ export const components: any[] = [
     AdminPanel,
     Signup,
     AdminDashboard,
-    Navbar
+    Navbar,
+    User,
+    Userhome
 ]
 
 export {
@@ -23,5 +28,7 @@ export {
     AdminPanel,
     Signup,
     AdminDashboard,
-    Navbar
+    Navbar,
+    User,
+    Userhome
 }

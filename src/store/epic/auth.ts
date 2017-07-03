@@ -103,6 +103,7 @@ export default class AuthEpic {
                     })
                     .switchMap((d: any) => {
                         // console.log('d login ecpis', d)
+                        console.log("login"+JSON.stringify(d))
                         if (d.message) {
                             // error
                             return Observable.of({
@@ -113,6 +114,7 @@ export default class AuthEpic {
                             return Observable.fromPromise(firebase.database().ref('/').child(`users/${d.displayName}`).once('value'))
                                 .map(u => {
                                     //set local storage
+                                    console.log("dsfsdfsd"+JSON.stringify(u.val()))
                                     localStorage.setItem('react-localStorage-user', JSON.stringify(u.val()));
                                     return {
                                         type: AuthActions.LOGIN_SUCCESS,

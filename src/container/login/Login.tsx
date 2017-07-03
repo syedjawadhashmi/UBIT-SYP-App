@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { browserHistory } from 'react-router';
 //import { authActions } from '../../action/auth';
+import AuthActions from "../../store/action/auth";
 // Components
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -15,19 +16,9 @@ const fieldStyle = { width: '80%' }
 
 interface IRMemberProps extends React.Props<any> {
     login: (obj: Object) => void;
-   // isAuthenticated: boolean;
+    isAuthenticated: boolean;
 }
 
-function mapStateToProps(state: any) {
-    return {
-        //isAuthenticated: state.AuthReducer['isAuthenticated'],
-    };
-}
-function mapDispatchToProps(dispatch: any) {
-    return {
-        login: (data: Object): void => dispatch()
-    };
-}
 
 
 class Login extends React.Component<IRMemberProps, any> {
@@ -38,18 +29,19 @@ class Login extends React.Component<IRMemberProps, any> {
 
     handleLogin(state: any) {
         // this.props.signInWithCustom(loginData)
+        this.props.login(state);
     }
 
-    // _flag = true;
+     _flag = true;
     componentWillReceiveProps() {
-        /*setTimeout(() => {
+        setTimeout(() => {
          if (this.props.isAuthenticated && this._flag) {
          this._flag = false;
          browserHistory.push('/home');
          } else if (!this.props.isAuthenticated && !this._flag) {
          this._flag = true;
          }
-         }, 10);*/
+         }, 10);
 
         //sj       console.log(nextProps)
         /*      const { auth } = this.props;
@@ -77,4 +69,16 @@ class Login extends React.Component<IRMemberProps, any> {
     }
 
 }
+
+function mapStateToProps(state: any) {
+    return {
+        isAuthenticated: state.AuthReducer['isAuthenticated'],
+    };
+}
+function mapDispatchToProps(dispatch: any) {
+    return {
+        login: (data: Object): void => dispatch(AuthActions.login(data))
+    };
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
