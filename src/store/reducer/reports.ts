@@ -21,14 +21,15 @@ function ReportsReducer(state = INITIAL_STATE, action: IACTION) {
         case reporsAction.GETCOMPLAINTS:
             newObj = Object.assign({}, state.complaints);
             newObj[action.payload['$key']] = action.payload;
-             console.log('Complaints---------------------------', Object.assign({}, state, { vacancies: newObj }))
+             console.log('Complaints---------------------------', Object.assign({}, state, { complaints: newObj }))
             return Object.assign({}, state, { complaints: newObj });
 
         case reporsAction.GETCRIMES:
             newObj = Object.assign({}, state.crimes);
             newObj[action.payload['$key']] = action.payload;
-            console.log('Crimes---------------------------', Object.assign({}, state, { vacancies: newObj }))
+            console.log('Crimes---------------------------', Object.assign({}, state, { crimes: newObj }))
             return Object.assign({}, state, { crimes: newObj });
+
         case reporsAction.GETREPORTS:
             console.log('ALL REPORTS-----', action.payload);
             newObj = Object.assign({}, state.reports);

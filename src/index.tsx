@@ -11,7 +11,7 @@ import * as injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import { store } from './store/index';
 // import * as firebase from "firebase";
-import { App, Login, AdminPanel, Signup, AdminDashboard ,User,Userhome } from "./container";
+import { App, Login, AdminPanel, Signup, AdminDashboard ,User,Userhome,Crime } from "./container";
 import { Home } from "./component";
 
 
@@ -47,7 +47,9 @@ ReactDOM.render(
                 <Route path="signup" component={Signup} />
                 <Route component={User} onEnter={checkIsAdmin}>
                     {/*<IndexRoute component={userHome} />*/}
-                    <Route path="home" component={Userhome}  />
+                    <Route path="home" component={Userhome}/>
+                    <Route path="crimes" component={Crime}/>
+
                     {/*<Route path="ngo-detail/:ngoId" component={NgoDetail} />*/}
                 </Route>
             </Route>

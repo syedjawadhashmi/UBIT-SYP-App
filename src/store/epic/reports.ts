@@ -6,7 +6,7 @@ import { ActionsObservable } from "redux-observable";
 import { browserHistory } from 'react-router'; // http://stackoverflow.com/questions/31079081/programmatically-navigate-using-react-router
 
 import AuthActions from "./../action/auth";
-import StudentActions from "./../action/student";
+import StudentActions from "./../action/reports";
 
 import { FirebaseServie } from '../../service/firebaseService';
 import * as firebase from 'firebase';
@@ -18,12 +18,12 @@ export default class ReportsEpic {
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
                 // console.log('StudentEpics LOGINSUCCESS ', payload)
-                if (payload && (payload.type == 'student' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
                     ReportsEpic.mainRef.child('crimes').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
                         let obj = Object.assign({}, snapshot.val());
                         obj['$key'] = snapshot.key
-                        StudentActions.addAllVacancies(obj);
+                        StudentActions.getCrimes(obj);
                     })
 
                 }
@@ -36,14 +36,14 @@ export default class ReportsEpic {
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
                 // console.log('StudentEpics LOGINSUCCESS ', payload)
-                if (payload && (payload.type == 'student' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
                     ReportsEpic.mainRef.child('complaints').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
-                        if (snapshot.val() && snapshot.val().type == 'company') {
+
                             let obj = Object.assign({}, snapshot.val());
                             obj['$key'] = snapshot.key
-                            StudentActions.addCompanies(obj);
-                        }
+                            StudentActions.getComplaints(obj);
+
                     })
                 }
                 return Observable.of({
@@ -55,14 +55,14 @@ export default class ReportsEpic {
     static getAllReports = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
-                if (payload && (payload.type == 'admin' || payload.type == 'company')) {
+                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
                     ReportsEpic.mainRef.child('reports').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
-                        if (snapshot.val() && snapshot.val().type == 'student') {
+
                             let obj = Object.assign({}, snapshot.val());
                             obj['$key'] = snapshot.key
-                            StudentActions.addStudent(obj);
-                        }
+                            StudentActions.getReports(obj);
+
                     })
                 }
 
