@@ -45,17 +45,17 @@ interface IHomeProps extends React.Props<any> {
 
 
                     {
-                        this.showList1(this.props.crimes).map((val, indx) => {
+                        this.showList1(this.props.reports).map((val, indx) => {
                             return<Card key={indx} style={{margin:'30px',marginBottom:'10px'}}>
 
                                 <CardHeader
-                                    title={this.props.crimes[val].reporterName}
-                                    subtitle={this.props.crimes[val].role}
-                                    avatar={this.props.crimes[val].url2}
+                                    title={this.props.reports[val].reporterName}
+                                    subtitle={this.props.reports[val].role}
+                                    avatar={this.props.reports[val].url2}
                                 />
                                 <CardText>
 
-                                    {this.props.crimes[val].details}
+                                    {this.props.reports[val].details}
                                     <br/>
                                     <br/>
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.

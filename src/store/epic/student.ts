@@ -102,11 +102,14 @@ export default class StudentEpic {
     static addVacancyEpics = (action$: ActionsObservable<any>) =>
         action$.ofType(StudentActions.ADDVACANCY)
             .switchMap(({payload}) => {
-                console.log('add vacancy ', payload)
-                payload['dated'] = firebase.database.ServerValue.TIMESTAMP;
+          
 
+
+                
+                payload['dated'] = firebase.database.ServerValue.TIMESTAMP;
                 let Objkey = StudentEpic.mainRef.child(`posts`).push(payload)
                 console.log('Objkey ------------ ', Objkey);
+
                 return Observable.fromPromise(StudentEpic.mainRef.child(`company-posts/${payload.company}/${Objkey.key}`)
                     .update(payload))
                     .map((data) => {

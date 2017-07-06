@@ -52,6 +52,24 @@ export default class ReportsEpic {
             })
 
 
+    static getMissings = (action$: ActionsObservable<any>) =>
+        action$.ofType(AuthActions.LOGIN_SUCCESS)
+            .switchMap(({payload}) => {
+                // console.log('StudentEpics LOGINSUCCESS ', payload)
+                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
+                    ReportsEpic.mainRef.child('missings').on('child_added', (snapshot) => {
+                        // console.log('child_added: ', snapshot.key, snapshot.val());
+
+                            let obj = Object.assign({}, snapshot.val());
+                            obj['$key'] = snapshot.key
+                            StudentActions.getMissings(obj);
+
+                    })
+                }
+                return Observable.of({
+                    type: StudentActions.NULL
+                })
+            })
     static getAllReports = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
@@ -71,6 +89,80 @@ export default class ReportsEpic {
                 })
             })
 
+
+
+ static addReports = (action$: ActionsObservable<any>) =>
+        action$.ofType(StudentActions.ADDCRIMES)
+            .switchMap(({payload}) => {
+
+
+                 console.log('add reports ', payload)
+                payload['dated'] = firebase.database.ServerValue.TIMESTAMP;
+                if (payload && (payload.role == 'Crime')) {
+
+                let Objkey = ReportsEpic.mainRef.child(`reports`).push(payload)
+                let objkey2 =  ReportsEpic.mainRef.child(`crimes/ ${Objkey.key}`).set(payload)
+                console.log('Objkey ------------ ', Objkey);
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${Objkey.key}`)
+                    .set(payload))
+                    .map((data) => {
+                        console.log('add Crimes Data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+
+                   
+                } else if (payload && payload.role == 'Missing') {
+                        let Objkey = ReportsEpic.mainRef.child(`reports`).push(payload)
+                let objkey2 =  ReportsEpic.mainRef.child(`missings/ ${Objkey.key}`).set(payload)
+                console.log('Objkey ------------ ', Objkey);
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${Objkey.key}`)
+                    .set(payload))
+                    .map((data) => {
+                        console.log('add Missing Data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+
+
+                }else if (payload && payload.role == 'complaints') {
+                    
+                        let Objkey = ReportsEpic.mainRef.child(`reports`).push(payload)
+                let objkey2 =  ReportsEpic.mainRef.child(`Complaints/ ${Objkey.key}`).set(payload)
+                console.log('Objkey ------------ ', Objkey);
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${Objkey.key}`)
+                    .set(payload))
+                    .map((data) => {
+                        console.log('add ComplaintsZZZZz Data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+
+                }
+
+
+        //    return Observable.of({
+        //             type: StudentActions.NULL
+        //         })
+
+        //         .map((result) => {
+        //   return {
+        //     payload: result,
+        //     type: types.loginCompleted,
+        //   };
+        // })
+        // .catch((error) => {
+        //   return Observable.of({
+        //     payload: error,
+        //     type: types.loginFailed,
+        //   });
+        // });
+
+
+            })
 
 
 

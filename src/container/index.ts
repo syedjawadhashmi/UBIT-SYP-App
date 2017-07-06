@@ -7,6 +7,10 @@ import Navbar from "./Navbar/Navbar";
 import User from "./user/user";
 import Userhome from "./userhome/userhome";
 import Crime from "./crime/crime";
+import Complaint from "./complaint/complaint";
+import Missing from "./missing/missing";
+import AddReports from "./addReports/addReports";
+
 
 
 import AdminDashboard from "./../container/adminDashboard/adminDashboard";
@@ -20,7 +24,10 @@ export const components: any[] = [
     Navbar,
     User,
     Userhome,
-    Crime
+    Crime,
+    Complaint,
+    Missing,
+    AddReports
 ]
 
 export {
@@ -33,5 +40,8 @@ export {
     Navbar,
     User,
     Userhome,
-    Crime
+    Crime,
+    Complaint,
+    Missing,
+    AddReports
 }

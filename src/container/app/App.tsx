@@ -197,17 +197,19 @@ class App extends React.Component<any, any> {
 
         const sideMenu =  (this.props.isAuthenticated && this.state.open) ? (
                 <Drawer
+                
                     docked={true}
                     open={this.state.open}
                     onRequestChange={(open) => this.setState({open})}
+                    
                 >
                     <List>
                         <Subheader>Nested List Items</Subheader>
-                        <ListItem primaryText="Home" onClick={() => browserHistory.push('/home')}  leftIcon={<ContentDrafts />}  />
-                        <ListItem primaryText="Crimes"     onClick={() => browserHistory.push('/crimes')}leftIcon={<ContentSend />} />
-                        <ListItem primaryText="Complaints" leftIcon={<ContentInbox />} />
-                        <ListItem primaryText="All Reports" leftIcon={<ActionGrade />} />
-                        <ListItem primaryText="Add Reports" leftIcon={<Feedback />} />
+                        <ListItem primaryText="My Reports" onClick={() => browserHistory.push('/home')}  leftIcon={<ContentDrafts />}  />
+                        <ListItem primaryText="Crimes"  onClick={() => browserHistory.push('/crimes')}leftIcon={<ContentSend />} />
+                        <ListItem primaryText="Complaints"  onClick={() => browserHistory.push('/complaints')} leftIcon={<ActionGrade />} />
+                        <ListItem primaryText="Missing"  onClick={() => browserHistory.push('/missing')} leftIcon={<ContentInbox />} />
+                        <ListItem primaryText="File Report" onClick={() => browserHistory.push('/fileReports')} leftIcon={<Feedback />} />
 
                     </List>
                 </Drawer>

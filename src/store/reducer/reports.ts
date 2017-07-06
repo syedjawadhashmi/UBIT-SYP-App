@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     isProcessing: false,
     crimes: {},
     complaints: {},
+    missings: {},
     reports: {}
 }
 
@@ -29,6 +30,12 @@ function ReportsReducer(state = INITIAL_STATE, action: IACTION) {
             newObj[action.payload['$key']] = action.payload;
             console.log('Crimes---------------------------', Object.assign({}, state, { crimes: newObj }))
             return Object.assign({}, state, { crimes: newObj });
+             
+        case reporsAction.GETMISSING:
+            newObj = Object.assign({}, state.missings);
+            newObj[action.payload['$key']] = action.payload;
+            console.log('Missing---------------------------', Object.assign({}, state, { missings: newObj }))
+            return Object.assign({}, state, { missings: newObj });
 
         case reporsAction.GETREPORTS:
             console.log('ALL REPORTS-----', action.payload);
