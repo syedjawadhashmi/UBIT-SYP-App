@@ -28,7 +28,7 @@ function checkIsAdmin(nextState: any, replace: Function) {
     // } else 
     if (!user) {
         replace({
-            pathname: "/login",
+            pathname: "/",
             state: { nextPathname: nextState.location.pathname }
         })
     }
@@ -47,11 +47,12 @@ ReactDOM.render(
                 <Route path="signup" component={Signup} />
                 <Route component={User} onEnter={checkIsAdmin}>
                     {/*<IndexRoute component={userHome} />*/}
-                    <Route path="home" component={Userhome}/>
+                    <Route path="user" component={Userhome}/>
+                    <Route path="admin" component={AdminDashboard}/>
                     <Route path="crimes" component={Crime}/>
                     <Route path="complaints" component={Complaint}/>
                      <Route path="missing" component={Missing}/>
-                       <Route path="fileReports" component={AddReports}/>
+                    <Route path="fileReports" component={AddReports}/>
                     {/*<Route path="ngo-detail/:ngoId" component={NgoDetail} />*/}
                 </Route>
             </Route>

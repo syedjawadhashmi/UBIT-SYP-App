@@ -18,7 +18,7 @@ export default class ReportsEpic {
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
                 // console.log('StudentEpics LOGINSUCCESS ', payload)
-                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'reporter')) {
                     ReportsEpic.mainRef.child('crimes').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
                         let obj = Object.assign({}, snapshot.val());
@@ -36,7 +36,7 @@ export default class ReportsEpic {
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
                 // console.log('StudentEpics LOGINSUCCESS ', payload)
-                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'reporter')) {
                     ReportsEpic.mainRef.child('complaints').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
 
@@ -56,7 +56,7 @@ export default class ReportsEpic {
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
                 // console.log('StudentEpics LOGINSUCCESS ', payload)
-                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'reporter')) {
                     ReportsEpic.mainRef.child('missings').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
 
@@ -70,10 +70,47 @@ export default class ReportsEpic {
                     type: StudentActions.NULL
                 })
             })
+        static getUserReports = (action$: ActionsObservable<any>) =>
+        action$.ofType(AuthActions.LOGIN_SUCCESS)
+            .switchMap(({payload}) => {
+                // console.log('StudentEpics LOGINSUCCESS ', payload)
+                if (payload && (payload.type == 'reporter')) {
+                    ReportsEpic.mainRef.child(`userReports/${payload.userId}`).on('child_added', (snapshot) => {
+                        // console.log('child_added: ', snapshot.key, snapshot.val());
+
+                            let obj = Object.assign({}, snapshot.val());
+                            obj['$key'] = snapshot.key
+                            StudentActions.getUserReports(obj);
+
+                    })
+                }
+                return Observable.of({
+                    type: StudentActions.NULL
+                })
+            })
+      static getUsers = (action$: ActionsObservable<any>) =>
+        action$.ofType(AuthActions.LOGIN_SUCCESS)
+            .switchMap(({payload}) => {
+                // console.log('StudentEpics LOGINSUCCESS ', payload)
+                if (payload && (payload.type == 'admin')) {
+                    ReportsEpic.mainRef.child(`users`).on('child_added', (snapshot) => {
+                        // console.log('child_added: ', snapshot.key, snapshot.val());
+
+                            let obj = Object.assign({}, snapshot.val());
+                            obj['$key'] = snapshot.key
+                            StudentActions.getUsers(obj);
+
+                    })
+                }
+                return Observable.of({
+                    type: StudentActions.NULL
+                })
+            })
+
     static getAllReports = (action$: ActionsObservable<any>) =>
         action$.ofType(AuthActions.LOGIN_SUCCESS)
             .switchMap(({payload}) => {
-                if (payload && (payload.type == 'reporter' || payload.type == 'admin')) {
+                if (payload && (payload.type == 'admin')) {
                     ReportsEpic.mainRef.child('reports').on('child_added', (snapshot) => {
                         // console.log('child_added: ', snapshot.key, snapshot.val());
 
@@ -91,7 +128,9 @@ export default class ReportsEpic {
 
 
 
- static addReports = (action$: ActionsObservable<any>) =>
+    
+    
+    static addReports = (action$: ActionsObservable<any>) =>
         action$.ofType(StudentActions.ADDCRIMES)
             .switchMap(({payload}) => {
 
@@ -127,10 +166,10 @@ export default class ReportsEpic {
                     })
 
 
-                }else if (payload && payload.role == 'complaints') {
+                }else if (payload && payload.role == 'Complaints') {
                     
                         let Objkey = ReportsEpic.mainRef.child(`reports`).push(payload)
-                let objkey2 =  ReportsEpic.mainRef.child(`Complaints/ ${Objkey.key}`).set(payload)
+                let objkey2 =  ReportsEpic.mainRef.child(`complaints/ ${Objkey.key}`).set(payload)
                 console.log('Objkey ------------ ', Objkey);
                 return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${Objkey.key}`)
                     .set(payload))
@@ -164,6 +203,51 @@ export default class ReportsEpic {
 
             })
 
+static deleteReport = (action$: ActionsObservable<any>) =>
+        action$.ofType(StudentActions.DELETEREPORTS)
+            .switchMap(({payload}) => {
+                 if (payload && (payload.role == 'Crime')) {
 
+                 ReportsEpic.mainRef.child(`reports/${payload.$key}`).set({})
+                 ReportsEpic.mainRef.child(`crimes/ ${payload.$key}`).set({})
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${payload.$key}`)
+                    .set({}))
+                     .map((data) => {
+                        console.log('removed Crime data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+
+                   
+                } else if (payload && (payload.role == 'Complaints')) {
+
+                 ReportsEpic.mainRef.child(`reports/${payload.$key}`).set({})
+                 ReportsEpic.mainRef.child(`complaints/ ${payload.$key}`).set({})
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${payload.$key}`)
+                    .set({}))
+                     .map((data) => {
+                        console.log('removed Complaints data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+                }else if (payload && (payload.role == 'Missing')) {
+
+                 ReportsEpic.mainRef.child(`reports/${payload.$key}`).set({})
+                 ReportsEpic.mainRef.child(`missings/ ${payload.$key}`).set({})
+                return Observable.fromPromise(ReportsEpic.mainRef.child(`userReports/${payload.userId}/${payload.$key}`)
+                    .set({}))
+                     .map((data) => {
+                        console.log('removed Missing data', data)
+                        return {
+                            type: StudentActions.NULL
+                        }
+                    })
+                }
+            })
+
+
+ 
 
 }

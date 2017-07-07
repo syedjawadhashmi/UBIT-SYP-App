@@ -71,7 +71,7 @@ export default class LoginComponent extends React.Component<ILoginCompProps, any
 
                 </div>
                 <br/>
-                <div><Link className="nav-link" to="/signup">Register Account?</Link></div>
+                {/*<div><Link className="nav-link" to="/signup">Register Account?</Link></div>*/}
             </div>
         )
     }

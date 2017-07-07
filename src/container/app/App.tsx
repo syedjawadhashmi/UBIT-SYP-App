@@ -3,10 +3,12 @@ import { Link } from 'react-router'
 import {browserHistory} from 'react-router';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Navbar from "./../../container/Navbar/Navbar";
+
 // redux/firebase
 import { connect } from 'react-redux'
 import AuthActions from "./../../store/action/auth";
 // Components
+
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar'
 import IconMenu from 'material-ui/IconMenu'
@@ -15,6 +17,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {List, ListItem} from 'material-ui/List'
 import ActionGrade from 'material-ui/svg-icons/action/fingerprint'
 import Feedback from 'material-ui/svg-icons/action/feedback'
+import MenuIcons from 'material-ui/svg-icons/navigation/menu'
 import ContentInbox from 'material-ui/svg-icons/action/accessibility'
 import ContentDrafts from 'material-ui/svg-icons/action/home'
 import ContentSend from 'material-ui/svg-icons/action/view-quilt'
@@ -33,6 +36,7 @@ const avatarSize = 50;
 function mapStateToProps(state: any) {
     return {
         isAuthenticated: state.AuthReducer['isAuthenticated'],
+                activeUser: state.AuthReducer['activeUser'],
     };
 }
 
@@ -195,7 +199,7 @@ class App extends React.Component<any, any> {
          />
          )*/
 
-        const sideMenu =  (this.props.isAuthenticated && this.state.open) ? (
+        const sideMenu =  (this.props.isAuthenticated && this.state.open && this.props.activeUser.type == "reporter") ? (
                 <Drawer
                 
                     docked={true}
@@ -203,9 +207,11 @@ class App extends React.Component<any, any> {
                     onRequestChange={(open) => this.setState({open})}
                     
                 >
-                    <List>
-                        <Subheader>Nested List Items</Subheader>
-                        <ListItem primaryText="My Reports" onClick={() => browserHistory.push('/home')}  leftIcon={<ContentDrafts />}  />
+                <MenuIcons  onClick={this.handleToggle} style={{marginLeft:'20px',marginTop:"20px"}} />  
+                
+                    <List style={{marginTop:"25px"}}>
+                         
+                        <ListItem primaryText="My Reports" onClick={() => browserHistory.push('/user')}  leftIcon={<ContentDrafts />}  />
                         <ListItem primaryText="Crimes"  onClick={() => browserHistory.push('/crimes')}leftIcon={<ContentSend />} />
                         <ListItem primaryText="Complaints"  onClick={() => browserHistory.push('/complaints')} leftIcon={<ActionGrade />} />
                         <ListItem primaryText="Missing"  onClick={() => browserHistory.push('/missing')} leftIcon={<ContentInbox />} />
@@ -214,7 +220,22 @@ class App extends React.Component<any, any> {
                     </List>
                 </Drawer>
 
-            ) : ''
+            ) : <Drawer
+                
+                    docked={true}
+                    open={this.state.open}
+                    onRequestChange={(open) => this.setState({open})}
+                    
+                >
+                <MenuIcons  onClick={this.handleToggle} style={{marginLeft:'20px',marginTop:"20px"}} />  
+                
+                    <List style={{marginTop:"25px"}}>
+                         
+                        <ListItem primaryText="All Reports" onClick={() => browserHistory.push('/admin')}  leftIcon={<ContentDrafts />}  />
+                        <ListItem primaryText="All Reports" onClick={() => browserHistory.push('/admin')}  leftIcon={<ContentDrafts />}  />
+
+                    </List>
+                </Drawer>
         return (
             <div>
 
@@ -225,7 +246,7 @@ class App extends React.Component<any, any> {
                 <AppBar
                     className={`app-bar  ${(this.state.open && this.props.isAuthenticated ? ' expanded' : '')}` }
                     title="Crime Reports"
-                    showMenuIconButton={this.props.isAuthenticated }
+                    showMenuIconButton={this.props.isAuthenticated && !this.state.open }
                     onLeftIconButtonTouchTap={this.handleToggle}
                     iconElementRight={rightMenu}
 

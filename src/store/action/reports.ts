@@ -12,10 +12,16 @@ export default class ReportsActions {
     static GETCOMPLAINTS: string = "GETCOMPLAINTS";
        static GETMISSING: string = "GETMISSING";
     static GETREPORTS: string = "GETREPORTS";
-
+static GETUSERREPORTS: string = "GETUSERREPORTS";
+static GETUSERS: string = "GETUSERS";
      static ADDMISSINGS: string = "ADDMISSINGS";
     static ADDCOMPLAINTS: string = "ADDCOMPLAINTS";
     static ADDCRIMES: string = "ADDCRIMES";
+
+ static DELETEREPORTS: string = "DELETEREPORTS";
+    static DELETECOMPLAINTS: string = "DELETECOMPLAINTS";
+    static DELETECRIMES: string = "DELETECRIMES";
+
 
     static NULL: string = "NULL";
 
@@ -41,7 +47,19 @@ static getMissings(payload: Object) {
             payload
         })
     }
+    static getUserReports(payload: Object) {
+        store.dispatch({
+            type: ReportsActions.GETUSERREPORTS,
+            payload
+        })
+    }
 
+    static getUsers(payload: Object) {
+        store.dispatch({
+            type: ReportsActions.GETUSERS,
+            payload
+        })
+    }
 
 
     static getReports(payload: Object) {
@@ -51,7 +69,12 @@ static getMissings(payload: Object) {
         })
     }
 
-
+   static deleteReports(payload: Object) {
+        store.dispatch({
+            type: ReportsActions.DELETEREPORTS,
+            payload
+        })
+    }
   static addCrimes(payload: Object) {
         store.dispatch({
             type: ReportsActions.ADDCRIMES,

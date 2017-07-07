@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { browserHistory } from 'react-router';
 //import { authActions } from '../../action/auth';
 import AuthActions from "../../store/action/auth";
+
 // Components
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -17,6 +18,7 @@ const fieldStyle = { width: '80%' }
 interface IRMemberProps extends React.Props<any> {
     login: (obj: Object) => void;
     isAuthenticated: boolean;
+    activeUser: any;
 }
 
 
@@ -35,10 +37,14 @@ class Login extends React.Component<IRMemberProps, any> {
      _flag = true;
     componentWillReceiveProps() {
         setTimeout(() => {
-         if (this.props.isAuthenticated && this._flag) {
+         if (this.props.isAuthenticated && this._flag && this.props.activeUser.type == "reporter") {
          this._flag = false;
-         browserHistory.push('/home');
-         } else if (!this.props.isAuthenticated && !this._flag) {
+         browserHistory.push('/user');
+        }else if (this.props.isAuthenticated && this._flag && this.props.activeUser.type == "admin") {
+           this._flag = false;
+         browserHistory.push('/admin');
+         }
+         else if (!this.props.isAuthenticated && !this._flag) {
          this._flag = true;
          }
          }, 10);
@@ -63,6 +69,7 @@ class Login extends React.Component<IRMemberProps, any> {
             <div className='Login' style={{marginLeft: '340px',marginTop: '67px',width: '50%'}}>
                 <Paper className='Login-Panel'>
                     <LoginComponent click={this.handleLogin}/>
+                    
                 </Paper>
             </div>
         )
@@ -73,6 +80,7 @@ class Login extends React.Component<IRMemberProps, any> {
 function mapStateToProps(state: any) {
     return {
         isAuthenticated: state.AuthReducer['isAuthenticated'],
+          activeUser: state.AuthReducer['activeUser']
     };
 }
 function mapDispatchToProps(dispatch: any) {

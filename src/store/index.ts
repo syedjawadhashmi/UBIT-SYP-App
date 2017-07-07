@@ -40,7 +40,10 @@ export const rootEpic = combineEpics(
     ReportsEpic.getComplaints,
     ReportsEpic.getCrimes,
        ReportsEpic.getMissings,
-       ReportsEpic.addReports
+       ReportsEpic.getUserReports,
+       ReportsEpic.getUsers,
+       ReportsEpic.addReports,
+       ReportsEpic.deleteReport
 
 );
 
